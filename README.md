@@ -13,11 +13,6 @@ There is no slippage protection while removing liquidity and swap tokens from AM
 There are 2 intances where slippage protection is missing which are as below:
 
 1. When LV token holder redeem before expiry `vaultLib::redeemEarly` function is called in which `_liquidateLpPartial` function and in that  `_redeemCtDsAndSellExcessCt` is called. In `_redeemCtDsAndSellExcessCt` function CT tokens are swapped for RA tokens in AMM as below:
-
-```solidity
-...
-ra += ammRouter.swapExactTokensForTokens(ctSellAmount, 0, path, address(this), block.timestamp)[1];
-...
 ```
 As stated above, `swapExactTokensForTokens` function's 2nd parameter is 0 which shows that there is no slippage protection for this 
 swap and also deadline is block.timestamp.
